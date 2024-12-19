@@ -3,9 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # Remplacez par votre branche principale.
+      - master # Remplacez par votre branche principale.
   workflow_dispatch:      
-  
+
 permissions:
   contents: write
   id-token: write # Ajout de cette permission pour résoudre l'erreur.
