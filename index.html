@@ -4,46 +4,54 @@
     <meta charset="UTF-8">
     <title>QR Code Generator</title>
     <style>
-        html, body {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100%;
             background-color: #247f4f;
-            font-family: Arial, sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
             background-color: #e8eef2;
-            width: 90%;
-            max-width: 800px;
-            height: auto;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             padding: 20px;
             border-radius: 15px;
-            margin: 20px auto;
-        }
-        .controls {
-            width: 100%;
+            width: 90%;
             max-width: 600px;
-            margin-top: 50px;
             text-align: center;
+            color: #333;
+        }
+        .title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
         }
         .controls input[type="text"] {
-            width: 80%;
+            width: 100%;
             padding: 10px;
             font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
         }
         .controls input[type="range"] {
-            width: 80%;
-            margin: 20px 0;
+            width: 100%;
+            margin: 15px 0;
         }
         .controls button {
-            padding: 10px 20px;
+            background-color: #247f4f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
             font-size: 16px;
-            margin: 5px;
             cursor: pointer;
+            margin: 5px;
+        }
+        .controls button:hover {
+            background-color: #1e6b42;
         }
         .qr-code {
             margin-top: 20px;
@@ -56,12 +64,12 @@
 </head>
 <body>
     <div class="container">
+        <div class="title">QR Code Generator</div>
+        <div class="title" style="font-size: 0.8em;">by C.Lebocq</div>
         <div class="controls">
-            <input type="text" id="urlInput" placeholder="Enter URL">
-            <br>
-            <input type="range" id="sizeSlider" min="200" max="2000" value="200">
-            <div id="sizeDisplay" style="text-align: center;">Size: 200x200</div>
-            <br>
+            <input type="text" id="urlInput" placeholder="Enter your URL here">
+            <input type="range" id="sizeSlider" min="200" max="1000" value="300">
+            <div id="sizeDisplay">Size: 300x300</div>
             <button id="generateBtn">Create QR Code</button>
             <button id="downloadBtn">Download PNG</button>
         </div>
@@ -75,9 +83,9 @@
         const urlInput = document.getElementById('urlInput');
         const sizeSlider = document.getElementById('sizeSlider');
         const qrCodeDiv = document.getElementById('qrCode');
+        const sizeDisplay = document.getElementById('sizeDisplay');
         let qrCodeCanvas;
 
-        const sizeDisplay = document.getElementById('sizeDisplay');
         sizeSlider.addEventListener('input', () => {
             sizeDisplay.textContent = `Size: ${sizeSlider.value}x${sizeSlider.value}`;
         });
@@ -92,6 +100,8 @@
                     qrCodeCanvas = canvas;
                     qrCodeDiv.appendChild(canvas);
                 });
+            } else {
+                alert('Please enter a valid URL!');
             }
         });
 
@@ -101,6 +111,8 @@
                 link.href = qrCodeCanvas.toDataURL('image/png');
                 link.download = 'qrcode.png';
                 link.click();
+            } else {
+                alert('Generate a QR code first!');
             }
         });
     </script>
