@@ -3,12 +3,13 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master # Remplacez par votre branche principale.
+      - master # Assurez-vous que c'est bien votre branche principale.
   workflow_dispatch: # Permet un déclenchement manuel.
 
 permissions:
   contents: write
-  id-token: write # Nécessaire pour résoudre les erreurs liées au jeton.
+  pages: write # Ajout pour permettre l'écriture sur GitHub Pages.
+  id-token: write # Nécessaire pour les actions liées à OIDC.
 
 jobs:
   deploy:
@@ -22,9 +23,9 @@ jobs:
       uses: actions/configure-pages@v3
 
     - name: Deploy to GitHub Pages
-      uses: actions/upload-pages-artifact@v1 # Correction : utilisation de la version stable actuelle.
+      uses: actions/upload-pages-artifact@v3
       with:
         path: ./ # Déploie tous les fichiers.
 
     - name: Publish
-      uses: actions/deploy-pages@v2
+      uses: actions/deploy-pages@v4
